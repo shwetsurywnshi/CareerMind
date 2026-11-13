@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Career Mind</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-page">
+
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                <span class="logo-icon">✿</span>
+                Career <span>Mind</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="register-btn">Register</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+
+    <!-- Register Section -->
+    <section class="register-section">
+
+        <div class="register-container">
+
+            <!-- Left Illustration -->
+            <div class="register-illustration">
+
+                <div class="illustration-circle">
+                    <span>🎓</span>
+                </div>
+
+                <h2>Your Future Starts Here!</h2>
+
+                <p>
+                    Discover your interests, explore career opportunities
+                    and build the skills you need to achieve your goals.
+                </p>
+
+                <div class="illustration-decoration">
+                    <span>📚</span>
+                    <span>💡</span>
+                    <span>🚀</span>
+                </div>
+
+            </div>
+
+
+            <!-- Registration Form -->
+            <div class="register-card">
+
+                <div class="form-heading">
+
+                    <h1>Create Your Account</h1>
+
+                    <p>
+                        Join Career Mind and start building your future.
+                    </p>
+
+                </div>
+
+
+                <form id="registerForm">
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+
+                        <label for="fullname">Full Name</label>
+
+                        <div class="input-box">
+                            <span>👤</span>
+
+                            <input
+                                type="text"
+                                id="fullname"
+                                name="fullname"
+                                placeholder="Enter your full name"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="form-group">
+
+                        <label for="email">Email Address</label>
+
+                        <div class="input-box">
+                            <span>✉</span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-box">
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+
+                        <label for="confirmPassword">Confirm Password</label>
+
+                        <div class="input-box">
+                            <span>🔐</span>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm your password"
+                                minlength="8"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <p id="errorMessage" class="error-message"></p>
+
+                    <!-- Register Button -->
+                    <button type="submit" class="register-submit">
+                        Create Account →
+                    </button>
+
+                </form>
+
+
+                <div class="login-link">
+
+                    <p>
+                        Already have an account?
+                        <a href="login.html">Login</a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>Career Mind</h3>
+
+            <p>Discover your potential. Build your future.</p>
+
+            <p class="copyright">
+                © 2026 Career Mind. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Basic Form Validation -->
+    <script>
+
+        const form = document.getElementById("registerForm");
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            const errorMessage =
+                document.getElementById("errorMessage");
+
+            if (password !== confirmPassword) {
+
+                errorMessage.textContent =
+                    "Passwords do not match!";
+
+                return;
+            }
+
+            errorMessage.textContent = "";
+
+            alert("Registration form validated successfully!");
+
+        });
+
+    </script>
+
+
+/* =================================
+   REGISTER PAGE
+================================= */
+<style>
+.auth-page {
+    background: #F0F9F8;
+}
+
+
+/* Register Section */
+
+.register-section {
+    min-height: 650px;
+    padding: 60px 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Main Container */
+
+.register-container {
+    width: 100%;
+    max-width: 1050px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(15, 110, 110, 0.10);
+}
+
+
+/* Left Illustration */
+
+.register-illustration {
+    background: linear-gradient(
+        145deg,
+        #DDF4F1,
+        #BCE5E1
+    );
+
+    padding: 55px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.illustration-circle {
+    width: 170px;
+    height: 170px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 85px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(15, 110, 110, 0.10);
+}
+
+.register-illustration h2 {
+    color: #183153;
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.register-illustration p {
+    color: #53687C;
+    font-size: 14px;
+    line-height: 1.9;
+    max-width: 350px;
+}
+
+.illustration-decoration {
+    display: flex;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.illustration-decoration span {
+    background: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+}
+
+
+/* Register Card */
+
+.register-card {
+    padding: 45px 50px;
+}
+
+.form-heading {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.form-heading h1 {
+    color: #183153;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.form-heading p {
+    color: #718096;
+    font-size: 13px;
+}
+
+
+/* Form Fields */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    color: #263B50;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #D8E6E6;
+    border-radius: 8px;
+    padding: 0 13px;
+    background: #FCFEFE;
+    transition: 0.3s;
+}
+
+.input-box:focus-within {
+    border-color: #0F6E6E;
+    box-shadow: 0 0 0 3px rgba(15,110,110,0.08);
+}
+
+.input-box span {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 45px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #263B50;
+}
+
+.input-box input::placeholder {
+    color: #A0AEBB;
+}
+
+
+/* Error Message */
+
+.error-message {
+    color: #D93025;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+
+/* Submit Button */
+
+.register-submit {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #0F6E6E;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-submit:hover {
+    background: #084F50;
+}
+
+
+/* Login Link */
+
+.login-link {
+    text-align: center;
+    margin-top: 22px;
+}
+
+.login-link p {
+    font-size: 12px;
+    color: #718096;
+}
+
+.login-link a {
+    color: #0F6E6E;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 850px) {
+
+    .register-container {
+        grid-template-columns: 1fr;
+        max-width: 550px;
+    }
+
+    .register-illustration {
+        padding: 35px 25px;
+    }
+
+    .illustration-circle {
+        width: 110px;
+        height: 110px;
+        font-size: 55px;
+        margin-bottom: 20px;
+    }
+
+    .register-card {
+        padding: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .register-section {
+        padding: 30px 15px;
+    }
+
+    .register-card {
+        padding: 25px 20px;
+    }
+
+    .register-illustration h2 {
+        font-size: 22px;
+    }
+
+    .form-heading h1 {
+        font-size: 22px;
+    }
+}
+</style>
+</body>
+</html>
