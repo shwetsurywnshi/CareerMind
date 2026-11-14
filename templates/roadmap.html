@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skills & Roadmap | Career Mind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #F4FBFA;
+            color: #183153;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 700;
+            color: #183153;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #0F6E6E;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #263B50;
+            font-size: 13px;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #0F6E6E;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: #657B8D;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Career Selection */
+        .career-info {
+            background: white;
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #DCEDEC;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .career-info h3 {
+            margin: 0 0 5px;
+            font-size: 16px;
+        }
+
+        .career-info p {
+            margin: 0;
+            color: #657B8D;
+            font-size: 12px;
+        }
+
+        .career-badge {
+            background: #E1F3F2;
+            color: #0F6E6E;
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Progress Summary */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #E1EEEE;
+        }
+
+        .summary-card h3 {
+            font-size: 13px;
+            color: #657B8D;
+            font-weight: 500;
+            margin: 0 0 10px;
+        }
+
+        .summary-card h2 {
+            color: #0F6E6E;
+            font-size: 27px;
+            margin: 0;
+        }
+
+        /* Roadmap Table */
+        .roadmap-section {
+            background: white;
+            border-radius: 13px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            overflow-x: auto;
+        }
+
+        .section-heading {
+            margin-bottom: 20px;
+        }
+
+        .section-heading h2 {
+            font-size: 20px;
+            margin: 0 0 5px;
+        }
+
+        .section-heading p {
+            font-size: 12px;
+            color: #657B8D;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #EAF6F5;
+            color: #183153;
+            padding: 14px 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #E8F0F0;
+            font-size: 12px;
+            color: #42566A;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .beginner {
+            background: #FFF0D9;
+            color: #B7791F;
+        }
+
+        .basic {
+            background: #DDF3EC;
+            color: #16835D;
+        }
+
+        .intermediate {
+            background: #E5EDFF;
+            color: #4169B1;
+        }
+
+        .advanced {
+            background: #DDF3F8;
+            color: #14758C;
+        }
+
+        /* Date Input */
+        .date-input {
+            width: 135px;
+            padding: 8px;
+            border: 1px solid #DCEDEC;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 11px;
+            outline: none;
+        }
+
+        .date-input:focus {
+            border-color: #0F6E6E;
+        }
+
+        /* Buttons */
+        .btn {
+            border: none;
+            padding: 9px 13px;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .target-btn {
+            background: #E1F3F2;
+            color: #0F6E6E;
+        }
+
+        .mentor-btn {
+            background: #0F6E6E;
+            color: white;
+        }
+
+        .mentor-btn:hover {
+            background: #084F50;
+        }
+
+        .target-btn:hover {
+            background: #CDEBE8;
+        }
+
+        /* Learning Tips */
+        .tips-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .tips-section h2 {
+            font-size: 19px;
+            margin-top: 0;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .tip-card {
+            background: #F4FBFA;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .tip-card h3 {
+            font-size: 13px;
+            margin: 0 0 7px;
+            color: #0F6E6E;
+        }
+
+        .tip-card p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #657B8D;
+            margin: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #657B8D;
+        }
+
+        /* Footer */
+        footer {
+            background: #0F6E6E;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media(max-width: 700px) {
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .page-heading h1 {
+                font-size: 22px;
+            }
+
+            .roadmap-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+
+            <a href="{{ url_for('index') }}" class="logo">
+                ✿ Career <span>Mind</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('careers') }}">Careers</a>
+                <a href="{{ url_for('roadmap') }}" class="active">Roadmap</a>
+                <a href="{{ url_for('profile') }}">My Profile</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <div class="page-heading">
+
+            <h1>Skills Gap Analysis and Learning Roadmap</h1>
+
+            <p>
+                Track your current skills, see what you need to improve,
+                and set target dates for your career development.
+            </p>
+
+        </div>
+
+
+        <!-- Selected Career -->
+        <div class="career-info">
+
+            <div>
+                <h3>Your Selected Career</h3>
+                <p>Build the skills needed to achieve your career goals.</p>
+            </div>
+
+            <span class="career-badge">
+                {{ career_name }}
+            </span>
+
+        </div>
+
+
+        <!-- Summary Cards -->
+        <div class="summary">
+
+            <div class="summary-card">
+                <h3>Total Skills</h3>
+                <h2>{{ total_skills }}</h2>
+            </div>
+
+            <div class="summary-card">
+                <h3>Skills to Improve</h3>
+                <h2>{{ skills_to_improve }}</h2>
+            </div>
+
+            <div class="summary-card">
+                <h3>Skills Completed</h3>
+                <h2>{{ skills_completed }}</h2>
+            </div>
+
+        </div>
+
+
+        <!-- Skills Table -->
+        <section class="roadmap-section">
+
+            <div class="section-heading">
+
+                <h2>Your Learning Roadmap</h2>
+
+                <p>
+                    Compare your current skill level with the required
+                    level for your selected career.
+                </p>
+
+            </div>
+
+
+            {% if skills %}
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Current Level</th>
+                        <th>Required Level</th>
+                        <th>Target Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for skill in skills %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ skill.name }}</strong>
+                        </td>
+
+                        <td>
+                            <span class="level {{ skill.current_level|lower }}">
+                                {{ skill.current_level }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="level {{ skill.required_level|lower }}">
+                                {{ skill.required_level }}
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('roadmap') }}"
+                                  class="target-form">
+
+                                <input type="hidden"
+                                       name="skill_id"
+                                       value="{{ skill.id }}">
+
+                                <input type="date"
+                                       name="target_date"
+                                       class="date-input"
+                                       min="{{ today }}"
+                                       value="{{ skill.target_date or '' }}"
+                                       required>
+
+                                <button type="submit"
+                                        class="btn target-btn">
+                                    Set Date
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                        <td>
+                            <a href="{{ url_for('find_mentor', skill_id=skill.id) }}"
+                               class="btn mentor-btn">
+                                Find a Mentor
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty-state">
+                <h3>No Skills Found</h3>
+                <p>Please complete your career assessment first.</p>
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- Learning Tips -->
+        <section class="tips-section">
+
+            <h2>Tips for Your Learning Journey</h2>
+
+            <div class="tips-grid">
+
+                <div class="tip-card">
+                    <h3>01. Set Goals</h3>
+                    <p>
+                        Set realistic target dates for each skill
+                        and work consistently towards them.
+                    </p>
+                </div>
+
+                <div class="tip-card">
+                    <h3>02. Practice Regularly</h3>
+                    <p>
+                        Apply your knowledge through practical
+                        exercises and mini projects.
+                    </p>
+                </div>
+
+                <div class="tip-card">
+                    <h3>03. Learn from Mentors</h3>
+                    <p>
+                        Connect with experienced people to get
+                        guidance and improve your skills.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        Career Mind | Build Your Future
+    </footer>
+
+</body>
+</html>

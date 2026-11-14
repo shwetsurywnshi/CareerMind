@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Career Mind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #F4FBFA;
+            color: #183153;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 700;
+            color: #183153;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #0F6E6E;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #263B50;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #0F6E6E;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-icon {
+            width: 32px;
+            height: 32px;
+            background: #DDF3EC;
+            color: #0F6E6E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Welcome Section */
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            font-size: 25px;
+            margin: 0 0 5px;
+        }
+
+        .welcome p {
+            color: #657B8D;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .date {
+            color: #657B8D;
+            font-size: 12px;
+        }
+
+        /* Summary Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #E1EEEE;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: #E1F3F2;
+            color: #0F6E6E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+            margin-bottom: 13px;
+        }
+
+        .stat-card h3 {
+            color: #657B8D;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0 0 8px;
+        }
+
+        .stat-card h2 {
+            font-size: 22px;
+            margin: 0 0 4px;
+            color: #183153;
+        }
+
+        .stat-card p {
+            font-size: 11px;
+            color: #657B8D;
+            margin: 0;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            padding: 23px;
+            border-radius: 13px;
+            border: 1px solid #E1EEEE;
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .section-header a {
+            color: #0F6E6E;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Goals */
+        .goal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #E8F0F0;
+        }
+
+        .goal-item:last-child {
+            border-bottom: none;
+        }
+
+        .goal-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .goal-icon {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 10px;
+            background: #E1F3F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0F6E6E;
+            font-size: 18px;
+        }
+
+        .goal-info h3 {
+            font-size: 13px;
+            margin: 0 0 4px;
+        }
+
+        .goal-info p {
+            font-size: 11px;
+            color: #657B8D;
+            margin: 0;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .in-progress {
+            background: #FFF0D9;
+            color: #B7791F;
+        }
+
+        .not-started {
+            background: #E9F0F2;
+            color: #657B8D;
+        }
+
+        .completed {
+            background: #DDF3EC;
+            color: #16835D;
+        }
+
+        /* Career Recommendation */
+        .career-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #F4FBFA;
+            padding: 20px;
+            border-radius: 11px;
+        }
+
+        .career-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 13px;
+            background: #DDF3EC;
+            color: #0F6E6E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+        }
+
+        .career-details {
+            flex: 1;
+        }
+
+        .career-details h3 {
+            margin: 0 0 5px;
+            font-size: 17px;
+        }
+
+        .career-details p {
+            margin: 0;
+            color: #657B8D;
+            font-size: 12px;
+        }
+
+        .match-score {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0F6E6E;
+        }
+
+        .view-btn {
+            background: #0F6E6E;
+            color: white;
+            padding: 10px 17px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .view-btn:hover {
+            background: #084F50;
+        }
+
+        /* Progress */
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #DCEDEC;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #0F6E6E;
+            border-radius: 20px;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .quick-card {
+            text-align: center;
+            padding: 18px 10px;
+            background: #F4FBFA;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #183153;
+            transition: 0.3s;
+        }
+
+        .quick-card:hover {
+            background: #E1F3F2;
+            transform: translateY(-3px);
+        }
+
+        .quick-card .icon {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .quick-card h3 {
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: #657B8D;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0F6E6E;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media(max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .navbar {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .welcome h1 {
+                font-size: 21px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+            }
+
+            .career-card {
+                flex-wrap: wrap;
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .goal-item {
+                align-items: flex-start;
+            }
+
+            .section {
+                padding: 16px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+
+        <nav class="navbar">
+
+            <a href="{{ url_for('index') }}" class="logo">
+                ✿ Career <span>Mind</span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="active">Dashboard</a>
+
+                <a href="{{ url_for('assessment') }}">Assessment</a>
+
+                <a href="{{ url_for('careers') }}">Careers</a>
+
+                <a href="{{ url_for('roadmap') }}">Roadmap</a>
+
+                <a href="{{ url_for('find_mentor') }}">Mentors</a>
+
+                <a href="{{ url_for('profile') }}">My Profile</a>
+
+            </div>
+
+            <div class="user-menu">
+
+                <div class="user-icon">
+                    {{ user_name[0]|upper }}
+                </div>
+
+                <span>{{ user_name }}</span>
+
+                <a href="{{ url_for('logout') }}"
+                   style="color:#0F6E6E;text-decoration:none;">
+                    Logout
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Main Dashboard -->
+    <main class="container">
+
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+
+            <div>
+
+                <h1>Hello, {{ user_name }}!</h1>
+
+                <p>
+                    Here's your progress and latest updates.
+                </p>
+
+            </div>
+
+            <div class="date">
+                {{ current_date }}
+            </div>
+
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section class="stats-grid">
+
+
+            <!-- Career Match -->
+            <div class="stat-card">
+
+                <div class="stat-icon">🎯</div>
+
+                <h3>Top Career Match</h3>
+
+                <h2>{{ top_career }}</h2>
+
+                <p>Score: {{ career_match }}%</p>
+
+            </div>
+
+
+            <!-- Skills -->
+            <div class="stat-card">
+
+                <div class="stat-icon">💻</div>
+
+                <h3>Skills to Build</h3>
+
+                <h2>{{ skills_to_build }}</h2>
+
+                <p>Skills remaining</p>
+
+            </div>
+
+
+            <!-- Roadmap -->
+            <div class="stat-card">
+
+                <div class="stat-icon">📈</div>
+
+                <h3>Roadmap Progress</h3>
+
+                <h2>{{ roadmap_progress }}%</h2>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"
+                         style="width: {{ roadmap_progress }}%;">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Notifications -->
+            <div class="stat-card">
+
+                <div class="stat-icon">🔔</div>
+
+                <h3>Notifications</h3>
+
+                <h2>{{ unread_notifications }}</h2>
+
+                <p>Unread notifications</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Upcoming Goals -->
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Upcoming Learning Goals</h2>
+
+                <a href="{{ url_for('roadmap') }}">View All →</a>
+
+            </div>
+
+
+            {% if goals %}
+
+                {% for goal in goals %}
+
+                <div class="goal-item">
+
+                    <div class="goal-left">
+
+                        <div class="goal-icon">
+                            📚
+                        </div>
+
+                        <div class="goal-info">
+
+                            <h3>{{ goal.name }}</h3>
+
+                            <p>Target Date: {{ goal.target_date }}</p>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="status
+                        {% if goal.status == 'Completed' %}
+                            completed
+                        {% elif goal.status == 'In Progress' %}
+                            in-progress
+                        {% else %}
+                            not-started
+                        {% endif %}">
+
+                        {{ goal.status }}
+
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-state">
+                    No learning goals added yet.
+                    <br><br>
+                    <a href="{{ url_for('roadmap') }}"
+                       style="color:#0F6E6E;">
+                        Create your learning roadmap
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- Top Career Recommendation -->
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Your Recommended Career</h2>
+
+                <a href="{{ url_for('careers') }}">Explore Careers →</a>
+
+            </div>
+
+
+            <div class="career-card">
+
+                <div class="career-icon">
+                    📊
+                </div>
+
+                <div class="career-details">
+
+                    <h3>{{ top_career }}</h3>
+
+                    <p>
+                        Based on your assessment answers and
+                        interests, this career is a strong match
+                        for your profile.
+                    </p>
+
+                </div>
+
+                <div class="match-score">
+                    {{ career_match }}%
+                </div>
+
+                <a href="{{ url_for('careers') }}"
+                   class="view-btn">
+                    View Details
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Quick Navigation -->
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Quick Access</h2>
+
+            </div>
+
+
+            <div class="quick-links">
+
+                <a href="{{ url_for('assessment') }}"
+                   class="quick-card">
+
+                    <div class="icon">📝</div>
+
+                    <h3>Take Assessment</h3>
+
+                </a>
+
+
+                <a href="{{ url_for('careers') }}"
+                   class="quick-card">
+
+                    <div class="icon">💼</div>
+
+                    <h3>Explore Careers</h3>
+
+                </a>
+
+
+                <a href="{{ url_for('roadmap') }}"
+                   class="quick-card">
+
+                    <div class="icon">📈</div>
+
+                    <h3>My Roadmap</h3>
+
+                </a>
+
+
+                <a href="{{ url_for('find_mentor') }}"
+                   class="quick-card">
+
+                    <div class="icon">👨‍🏫</div>
+
+                    <h3>Find a Mentor</h3>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        Career Mind | Build Your Future
+    </footer>
+
+
+</body>
+
+</html>

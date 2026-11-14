@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Careers | Career Mind</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #F4FBFA;
+            color: #183153;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 700;
+            color: #183153;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #0F6E6E;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #263B50;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #0F6E6E;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .page-heading p {
+            color: #657B8D;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Search and Filter */
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            flex: 1;
+        }
+
+        .search-box input,
+        .filter-box select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #DCEDEC;
+            border-radius: 9px;
+            background: white;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-box input:focus,
+        .filter-box select:focus {
+            border-color: #0F6E6E;
+        }
+
+        .filter-box {
+            width: 220px;
+        }
+
+        /* Career Grid */
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .career-card {
+            background: white;
+            border: 1px solid #E1EEEE;
+            border-radius: 13px;
+            padding: 22px 12px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 195px;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            border-color: #0F6E6E;
+            box-shadow: 0 7px 18px rgba(0,0,0,0.07);
+        }
+
+        .career-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            background: #E1F3F2;
+            color: #0F6E6E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 13px;
+        }
+
+        .career-card h3 {
+            font-size: 14px;
+            margin: 0 0 6px;
+        }
+
+        .career-card p {
+            font-size: 11px;
+            color: #657B8D;
+            margin: 0;
+        }
+
+        .category-tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            background: #EAF5F4;
+            color: #0F6E6E;
+            font-size: 10px;
+        }
+
+        /* Results */
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            color: #657B8D;
+            font-size: 13px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            color: #657B8D;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            background: #0F6E6E;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media(max-width: 950px) {
+            .career-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media(max-width: 600px) {
+            .nav-links {
+                gap: 10px;
+            }
+
+            .search-filter {
+                flex-direction: column;
+            }
+
+            .filter-box {
+                width: 100%;
+            }
+
+            .career-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-heading h1 {
+                font-size: 23px;
+            }
+        }
+
+        @media(max-width: 380px) {
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+
+            <a href="{{ url_for('index') }}" class="logo">
+                ✿ Career <span>Mind</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('assessment') }}">Assessment</a>
+                <a href="{{ url_for('careers') }}" class="active">Careers</a>
+                <a href="{{ url_for('profile') }}">My Profile</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <div class="page-heading">
+
+            <h1>Explore Careers</h1>
+
+            <p>
+                Discover different career opportunities and find
+                the one that matches your interests and skills.
+            </p>
+
+        </div>
+
+
+        <!-- Search and Filter -->
+        <div class="search-filter">
+
+            <div class="search-box">
+                <input type="text"
+                       id="searchInput"
+                       placeholder="🔍 Search careers...">
+            </div>
+
+            <div class="filter-box">
+                <select id="categoryFilter">
+
+                    <option value="all">All Interest Areas</option>
+                    <option value="technical">Technical</option>
+                    <option value="analytical">Analytical</option>
+                    <option value="creative">Creative</option>
+                    <option value="social">Social</option>
+                    <option value="entrepreneurial">Entrepreneurial</option>
+                    <option value="conventional">Conventional</option>
+
+                </select>
+            </div>
+
+        </div>
+
+
+        <!-- Career Count -->
+        <div class="results-info">
+            <span id="careerCount">Showing careers</span>
+        </div>
+
+
+        <!-- Career Cards -->
+        <div class="career-grid" id="careerGrid">
+
+            {% for career in careers %}
+
+            <a href="{{ url_for('career_detail',
+                                career_name=career.name) }}"
+               class="career-card"
+               data-name="{{ career.name|lower }}"
+               data-category="{{ career.category|lower }}">
+
+                <div class="career-icon">
+                    {{ career.icon }}
+                </div>
+
+                <h3>{{ career.name }}</h3>
+
+                <p>{{ career.description }}</p>
+
+                <span class="category-tag">
+                    {{ career.category }}
+                </span>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults">
+
+            <h3>No Careers Found</h3>
+
+            <p>
+                Try another career name or select a different
+                interest category.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        Career Mind | Build Your Future
+    </footer>
+
+
+    <!-- Search and Filter JavaScript -->
+    <script>
+
+        const searchInput = document.getElementById("searchInput");
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        const careerCards = document.querySelectorAll(".career-card");
+
+        const careerCount = document.getElementById("careerCount");
+        const noResults = document.getElementById("noResults");
+
+        function filterCareers() {
+
+            const searchValue = searchInput.value.toLowerCase().trim();
+
+            const selectedCategory = categoryFilter.value;
+
+            let visibleCount = 0;
+
+            careerCards.forEach(card => {
+
+                const careerName = card.dataset.name;
+                const careerCategory = card.dataset.category;
+
+                const matchesSearch =
+                    careerName.includes(searchValue);
+
+                const matchesCategory =
+                    selectedCategory === "all" ||
+                    careerCategory === selectedCategory;
+
+                if (matchesSearch && matchesCategory) {
+
+                    card.style.display = "flex";
+                    visibleCount++;
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+            careerCount.textContent =
+                `Showing ${visibleCount} career(s)`;
+
+            noResults.style.display =
+                visibleCount === 0 ? "block" : "none";
+
+        }
+
+        searchInput.addEventListener("input", filterCareers);
+
+        categoryFilter.addEventListener("change", filterCareers);
+
+        filterCareers();
+
+    </script>
+
+</body>
+</html>
