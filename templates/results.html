@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Career Matches | Career Mind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .results-page { background: #F4FBFA; min-height: 100vh; padding: 40px 20px; }
+        .results-wrap { max-width: 760px; margin: auto; }
+        .results-wrap h1 { color: #183153; font-size: 28px; margin-bottom: 8px; }
+        .subtitle { color: #657B8D; font-size: 14px; margin-bottom: 26px; }
+        .flash {
+            background: #E1F3F2; color: #0F5557; padding: 12px 16px;
+            border-radius: 8px; margin-bottom: 20px; font-size: 14px;
+        }
+        .match-card {
+            background: white; border-radius: 14px; padding: 22px 24px;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 20px;
+            box-shadow: 0 6px 18px rgba(15,110,110,0.08);
+        }
+        .rank {
+            width: 36px; height: 36px; border-radius: 50%; background: #0F6E6E;
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; flex-shrink: 0;
+        }
+        .match-info { flex: 1; }
+        .match-info h3 { color: #183153; font-size: 18px; margin-bottom: 4px; }
+        .score { color: #0F8585; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .reason { color: #657B8D; font-size: 13px; }
+        .detail-btn {
+            background: #0F6E6E; color: white; padding: 10px 20px; border-radius: 30px;
+            text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap;
+        }
+        .detail-btn:hover { background: #084F50; }
+        .note { color: #657B8D; font-size: 13px; margin: 18px 0; text-align: center; }
+        .retake { text-align: center; margin-top: 20px; }
+        .retake a {
+            display: inline-block; border: 1.5px solid #0F6E6E; color: #0F6E6E;
+            padding: 12px 26px; border-radius: 30px; text-decoration: none; font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .match-card { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-icon">✿</span>
+                Career <span>Mind</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('results.show') }}" class="active">My Results</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="results-page">
+        <div class="results-wrap">
+            <h1>Your Career Matches</h1>
+            <p class="subtitle">Based on your assessment answers, here are your top career matches.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% for m in messages %}
+                    <div class="flash">{{ m }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            {% for m in matches %}
+            <div class="match-card">
+                <div class="rank">{{ m.rank }}</div>
+                <div class="match-info">
+                    <h3>{{ m.name }}</h3>
+                    <p class="score">Score: {{ m.score }}</p>
+                    <p class="reason">{{ m.fit_reason }}</p>
+                </div>
+                <a href="#" class="detail-btn">View Details</a>
+            </div>
+            {% endfor %}
+
+            <p class="note">If multiple careers have the same score, they are shown together as equal matches.</p>
+
+            <div class="retake">
+                <a href="{{ url_for('assessment.interest') }}">Retake Assessment</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

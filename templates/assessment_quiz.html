@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Career Mind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .quiz-page { background: #F4FBFA; min-height: 100vh; padding: 0 20px 40px; }
+        .progress-top {
+            position: sticky; top: 0; z-index: 50;
+            background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            padding: 14px 0; margin-bottom: 30px;
+        }
+        .progress-inner { max-width: 680px; margin: auto; }
+        .progress-text { font-size: 14px; color: #183153; font-weight: 600; margin-bottom: 8px; }
+        .progress { height: 8px; background: #DCEDEC; border-radius: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0; background: #0F6E6E; transition: 0.3s; }
+        .quiz-card {
+            max-width: 680px; margin: auto; background: white;
+            border-radius: 15px; padding: 35px; box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+        .quiz-card h2 { color: #183153; font-size: 28px; margin-bottom: 8px; }
+        .subtitle { color: #657B8D; font-size: 14px; margin-bottom: 30px; }
+        .question-block { padding-bottom: 25px; margin-bottom: 25px; border-bottom: 1px solid #DCEDEC; }
+        .question-block:last-of-type { border-bottom: none; }
+        .question-block h3 { color: #183153; font-size: 18px; margin-bottom: 14px; }
+        .option {
+            display: block; border: 1.5px solid #DCEDEC; border-radius: 10px;
+            padding: 12px 18px; margin-bottom: 10px; cursor: pointer;
+            color: #263B50; font-size: 15px; transition: 0.2s;
+        }
+        .option:hover { border-color: #0F6E6E; background: #E1F3F2; }
+        .option input { margin-right: 12px; accent-color: #0F6E6E; }
+        .option.selected { border-color: #0F6E6E; background: #E1F3F2; }
+        .submit-btn {
+            display: block; width: 100%; margin-top: 10px; padding: 14px;
+            border: none; border-radius: 30px; background: #0F6E6E; color: white;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+        }
+        .submit-btn:hover { background: #084F50; }
+        .question-block.missing { border-left: 4px solid #D9534F; padding-left: 12px; }
+        .flash {
+            background: #FDECEA; color: #8A1F1A; padding: 12px 16px;
+            border-radius: 8px; margin-bottom: 20px; font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-icon">✿</span>
+                Career <span>Mind</span>
+            </a>
+        </nav>
+    </header>
+
+    <div class="progress-top">
+        <div class="progress-inner">
+            <p class="progress-text" id="progress-text">Answered: 0 of {{ questions|length }}</p>
+            <div class="progress"><div class="progress-bar" id="bar"></div></div>
+        </div>
+    </div>
+
+    <div class="quiz-page">
+        <div class="quiz-card">
+            <h2>{{ title }}</h2>
+            <p class="subtitle">{{ subtitle }} Answer all {{ questions|length }} questions, then click Finish.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% for m in messages %}
+                    <div class="flash">{{ m }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="post" action="{{ action }}" id="quiz-form">
+                {% for q in questions %}
+                <div class="question-block" id="q{{ q.id }}">
+                    <h3>{{ loop.index }}. {{ q.question_text }}</h3>
+                    {% for o in options_by_q[q.id] %}
+                    <label class="option">
+                        <input type="radio" name="q{{ q.id }}" value="{{ o.id }}">
+                        {{ o.option_text }}
+                    </label>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="submit-btn">Finish</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('quiz-form');
+        const blocks = document.querySelectorAll('.question-block');
+        const total = blocks.length;
+        const bar = document.getElementById('bar');
+        const text = document.getElementById('progress-text');
+
+        function updateProgress() {
+            let answered = 0;
+            blocks.forEach(block => {
+                const checked = block.querySelector('input:checked');
+                block.querySelectorAll('.option').forEach(l => l.classList.remove('selected'));
+                if (checked) {
+                    checked.closest('.option').classList.add('selected');
+                    answered++;
+                }
+            });
+            bar.style.width = Math.round((answered / total) * 100) + '%';
+            text.textContent = `Answered: ${answered} of ${total}`;
+        }
+
+        form.addEventListener('change', updateProgress);
+
+        form.addEventListener('submit', (e) => {
+            let firstMissing = null;
+            blocks.forEach(block => {
+                block.classList.remove('missing');
+                if (!block.querySelector('input:checked')) {
+                    block.classList.add('missing');
+                    if (!firstMissing) firstMissing = block;
+                }
+            });
+            if (firstMissing) {
+                e.preventDefault();
+                firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                alert('Please answer all questions before finishing.');
+            }
+        });
+
+        updateProgress();
+    </script>
+
+</body>
+</html>

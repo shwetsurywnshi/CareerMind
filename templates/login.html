@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Career Mind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .auth-page {
+            min-height: calc(100vh - 80px);
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(110deg, #ffffff, #E9F8F7);
+            padding: 40px 20px;
+        }
+        .auth-card {
+            width: 100%; max-width: 420px; background: white;
+            border-radius: 18px; padding: 40px 35px;
+            box-shadow: 0 10px 30px rgba(15,110,110,0.10);
+        }
+        .auth-card h2 { color: #183153; font-size: 26px; text-align: center; margin-bottom: 8px; }
+        .auth-card .subtitle { color: #657B8D; font-size: 14px; text-align: center; margin-bottom: 28px; }
+        .field { margin-bottom: 18px; }
+        .field label { display: block; font-size: 13px; font-weight: 600; color: #263B50; margin-bottom: 6px; }
+        .field input {
+            width: 100%; padding: 12px 14px; border: 1.5px solid #DCEDEC;
+            border-radius: 10px; font-size: 14px; font-family: 'Poppins', sans-serif;
+        }
+        .field input:focus { outline: none; border-color: #0F6E6E; }
+        .auth-btn {
+            width: 100%; padding: 14px; border: none; border-radius: 30px;
+            background: #0F6E6E; color: white; font-size: 15px; font-weight: 600;
+            cursor: pointer; margin-top: 8px;
+        }
+        .auth-btn:hover { background: #084F50; }
+        .auth-footer { text-align: center; margin-top: 22px; font-size: 14px; color: #657B8D; }
+        .auth-footer a { color: #0F6E6E; font-weight: 600; text-decoration: none; }
+        .flash {
+            background: #E1F3F2; color: #0F5557; padding: 12px 14px;
+            border-radius: 8px; font-size: 14px; margin-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-icon">✿</span>
+                Career <span>Mind</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('auth.login') }}" class="active">Login</a></li>
+                <li><a href="{{ url_for('auth.register') }}" class="register-btn">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="auth-page">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to continue your journey.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% for m in messages %}
+                    <div class="flash">{{ m }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="post" action="{{ url_for('auth.login') }}">
+                <div class="field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="auth-btn">Login</button>
+            </form>
+
+            <p class="auth-footer">Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

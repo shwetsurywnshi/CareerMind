@@ -1,0 +1,8 @@
+config.py
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+database/careermind.db
+.vscode/
